@@ -70,7 +70,7 @@ public class TouchManager {
 	   int actionCode = event.getAction() & MotionEvent.ACTION_MASK;
 
 	   if (actionCode == MotionEvent.ACTION_POINTER_UP || actionCode == MotionEvent.ACTION_UP) {
-		   int index = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+		   int index = event.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 		   previousPoints[index] = points[index] = null;
 	   }
 	   else {

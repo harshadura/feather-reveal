@@ -4,10 +4,7 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,8 +19,10 @@ import android.widget.RelativeLayout;
 
 public class FeatherRevealView extends RelativeLayout implements OnTouchListener {
 	ImageView fadeImage, frame, leftImage, rightImage;
+	float diffrence;
 	int preConeL =0;
 	int preConeR=0;
+	float preAlpha = 1;
 	
 	private int width;
 	private int height;
@@ -48,14 +47,6 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		super(context);
 		init(context);
 	}
-
-	/**
-	 * @param context
-	 */
-	// public FeatherRevealView(Context context, HeartViewListener listener) {
-	// super(context);
-	// init(context);
-	// }
 
 	/**
 	 * @param context
@@ -97,47 +88,7 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		leftImage.setY(height - 1300);
 		rightImage.setY(height - 1300);
 
-		animateR();
-	}
-
-	private static float getDegreesFromRadians(float angle) {
-		return (float)(angle * 180.0 / Math.PI);
-	}
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-
-		if (!isInitialized) {
-			int w = getWidth();
-			int h = getHeight();
-			position.set(w / 2, h / 2);
-			isInitialized = true;
-		}
-
-		Paint paint = new Paint();
-
-		 transform.reset();
-		 transform.postTranslate(-width / 2.0f, -height / 2.0f);
-		 transform.postRotate(getDegreesFromRadians(angle));
-		 transform.postScale(scale, scale);
-		 transform.postTranslate(position.getX(), position.getY());
-//		 canvas.drawBitmap(bitmap, transform, paint);
-
-		try {
-			paint.setColor(0xFF007F00);
-			canvas.drawCircle(vca.getX(), vca.getY(), 64, paint);
-//			paint.setColor(0xFF7F0000);
-//			canvas.drawCircle(vcb.getX(), vcb.getY(), 64, paint);
-
-//			paint.setColor(0xFFFF0000);
-//			canvas.drawLine(vpa.getX(), vpa.getY(), vpb.getX(), vpb.getY(), paint);
-//			paint.setColor(0xFF00FF00);
-//			canvas.drawLine(vca.getX(), vca.getY(), vcb.getX(), vcb.getY(), paint);
-		} catch (Exception e) {
-			e.printStackTrace();
-			// Just being lazy here...
-		}
+//		animateR();
 	}
 
 	@Override
@@ -150,11 +101,9 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		try {
 			touchManager.update(event);
 
-			if (touchManager.getPressCount() == 1) {
-				vca = touchManager.getPoint(0);
-				vpa = touchManager.getPreviousPoint(0);
-				position.add(touchManager.moveDelta(0));
-			} else {
+			Log.v("TAG", String.valueOf("Touches >>>>>>" + touchManager.getPressCount()));
+			
+	
 				if (touchManager.getPressCount() == 2) {
 					vca = touchManager.getPoint(0);
 					vpa = touchManager.getPreviousPoint(0);
@@ -172,7 +121,7 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 
 					angle -= Vector2D.getSignedAngleBetween(current, previous);
 				}
-			}
+			
 
 //			invalidate();
 //			animateR();
@@ -204,71 +153,77 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		rightImage.setPivotY(height - 100);
 		Log.v("TAF", "******* > " + diff);
 		
-		if(diff < 1){
-
-			diff = diff*10;
-			Log.v("TAF", "******* > " + diff);
-			
-			//		AnimatorSet set = new AnimatorSet();
-//		set.playTogether(
-//				ObjectAnimator.ofFloat(leftImage, "rotation", 0, -90), 
-//				ObjectAnimator.ofFloat(rightImage, "rotation", 0, 90),
-//				ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-//		);
-//		set.start();
-		}
-		if(1<=diff && diff < 2){
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-					ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, -70), 
-					ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, 70)
-					
-//					ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-			);
-			set.start();
-			preConeL = -70; preConeR=70;
-			}
-		if(2<=diff && diff < 3){
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-					ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, -50), 
-					ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, 50)
-//					ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-			);
-			set.start();
-			preConeL = -50; preConeR=50;	
-		}
-		if(3<=diff && diff < 4){
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-					ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, -30), 
-					ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, 30)
-//					ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-			);
-			set.start();
-			preConeL = -30; preConeR=30;	
-		}
-		if(4<=diff && diff < 5){
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-					ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, -10), 
-					ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, 10)
-//					ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-			);
-			set.start();
-			preConeL = -10; preConeR=10;
-		}
+		    
+//		boolean flag = animateOnRange(diff);
+//		if (flag == true)
+			moveOnSpecifix(diff);
 		
-		if( diff >= 5){
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-					ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, 0), 
-					ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, 0)
-//					ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
-			);
-			set.start();
-			preConeL = 0; preConeR=0;
+		
+	}
+	
+	private boolean animateOnRange(float diff){
+		if(1<=diff && diff < 3){
+			animateFeatherParas(0, 1);
+			return true;
 		}
+		if(3<=diff && diff < 5){
+			animateFeatherParas(100, 0);
+			return true;
+		}
+		return false;
+	}
+	
+	private void moveOnSpecifix(float diff){
+		diffrence = diff;
+	int distanceBetweenFingers = (int) Math.round(diff);
+		
+		switch (distanceBetweenFingers) {
+		
+		case 1: changeFeatherParas(0, 1);
+		break;
+		case 2: changeFeatherParas(18, 0.8f);
+		break;
+		case 3: changeFeatherParas(36, 0.6f);
+		break;
+		case 4: changeFeatherParas(54, 0.4f);
+		break;
+		case 5: changeFeatherParas(72, 0.2f);
+		break;
+		case 6: changeFeatherParas(100, 0);
+		break;
+		
+		default:
+			break;
+		}
+	}
+	private void changeFeatherParas(int angle, float alpha){
+		AnimatorSet set = new AnimatorSet();
+		set.playTogether(
+				ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, angle*-1), 
+				ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, angle),
+				ObjectAnimator.ofFloat(fadeImage, "alpha", preAlpha, alpha), 
+				ObjectAnimator.ofFloat(frame, "alpha", preAlpha, alpha)
+		);
+		set.start();
+		preConeL = angle*-1; 
+		preConeR = angle; 
+		preAlpha = alpha;
+		
+		 animateOnRange(diffrence);
+	}
+
+	private void animateFeatherParas(int angle, float alpha){
+		AnimatorSet set = new AnimatorSet();
+		set.playTogether(
+				ObjectAnimator.ofFloat(leftImage, "rotation", preConeL, angle*-1), 
+				ObjectAnimator.ofFloat(rightImage, "rotation", preConeR, angle),
+				ObjectAnimator.ofFloat(fadeImage, "alpha", preAlpha, alpha), 
+				ObjectAnimator.ofFloat(frame, "alpha", preAlpha, alpha)
+		);
+		set.setDuration(5 * 1000).start();
+		preConeL = angle*-1; 
+		preConeR = angle; 
+		preAlpha = alpha;
 	}
 	
 	public void animateR() {
@@ -296,20 +251,6 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 				ObjectAnimator.ofFloat(fadeImage, "alpha", 1, 0.25f, 0)
 		);
 		set.setDuration(5 * 1000).start();
-
-		// AnimatorSet set = new AnimatorSet();
-		// set.playTogether(
-		// // ObjectAnimator.ofFloat(leftImage, "rotationY", 0, 360),
-		// // ObjectAnimator.ofFloat(leftImage, "rotationX", 0, 180)
-		// ObjectAnimator.ofFloat(leftImage, "rotation", 0, -90)
-		// // ObjectAnimator.ofFloat(leftImage, "translationX", 0, 360),
-		// // ObjectAnimator.ofFloat(leftImage, "translationY", 0, 90)
-		// // ObjectAnimator.ofFloat(leftImage, "scaleX", 1, 1.5f),
-		// // ObjectAnimator.ofFloat(leftImage, "scaleY", 1, 0.5f),
-		// // ObjectAnimator.ofFloat(leftImage, "alpha", 1, 0.25f, 1)
-		// );
-		// set.setDuration(5 * 1000).start();
-		//
 
 	}
 
