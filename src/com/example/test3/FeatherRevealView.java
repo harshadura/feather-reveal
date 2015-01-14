@@ -1,5 +1,7 @@
 package com.example.test3;
 
+import java.text.DecimalFormat;
+
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -178,26 +180,63 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 	
 	private void moveOnSpecifix(float diff){
 		diffrence = diff;
-	int distanceBetweenFingers = (int) Math.round(diff);
+//	int distanceBetweenFingers = (int) Math.round(diff);
 		
-		switch (distanceBetweenFingers) {
-		
-		case 1: changeFeatherParas(0, 1);
-		break;
-		case 2: changeFeatherParas(18, 0.8f);
-		break;
-		case 3: changeFeatherParas(36, 0.6f);
-		break;
-		case 4: changeFeatherParas(54, 0.4f);
-		break;
-		case 5: changeFeatherParas(72, 0.2f);
-		break;
-		case 6: changeFeatherParas(100, 0);
-		break;
-		
-		default:
-			break;
-		}
+	double rounded = Math.round(diff*100.0)/100.0;
+	
+	if (rounded == 1){
+		changeFeatherParas(0, 1);
+	}else if (rounded == 1.5){
+		changeFeatherParas(9, 0.9f);
+	}else if (rounded == 2){
+		changeFeatherParas(18, 0.8f);
+	}else if (rounded == 2.5){
+		changeFeatherParas(27, 0.7f);
+	}else if (rounded == 3){
+		changeFeatherParas(36, 0.6f);
+	}else if (rounded == 3.5){
+		changeFeatherParas(45, 0.5f);
+	}else if (rounded == 4){
+		changeFeatherParas(54, 0.4f);
+	}else if (rounded == 4.5){
+		changeFeatherParas(63, 0.3f);
+	}else if (rounded == 5){
+		changeFeatherParas(72, 0.2f);
+	}else if (rounded == 5.5){
+		changeFeatherParas(81, 0.1f);
+	}else if (rounded == 6){
+		changeFeatherParas(100, 0);
+	}
+	
+	
+//		switch (rounded) {
+//		
+//		case 1: changeFeatherParas(0, 1);
+//		break;
+//		case 2: changeFeatherParas(9, 0.9f);
+//		break;
+//		case 3: changeFeatherParas(18, 0.8f);
+//		break;
+//		case 4: changeFeatherParas(27, 0.7f);
+//		break;
+//		case 5: changeFeatherParas(36, 0.6f);
+//		break;
+//		case 6: changeFeatherParas(45, 0.5f);
+//		break;
+//		case 2: changeFeatherParas(54, 0.4f);
+//		break;
+//		case 3: changeFeatherParas(63, 0.3f);
+//		break;
+//		case 4: changeFeatherParas(72, 0.2f);
+//		break;
+//		case 5: changeFeatherParas(81, 0.1f);
+//		break;
+//		case 6: changeFeatherParas(100, 0);
+//		break;
+//		
+//		default:
+//			break;
+//		}
 	}
 	private void changeFeatherParas(int angle, float alpha){
 		AnimatorSet set = new AnimatorSet();
