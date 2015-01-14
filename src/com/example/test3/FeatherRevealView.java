@@ -182,6 +182,7 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		
 		switch (distanceBetweenFingers) {
 		
+		case 0:
 		case 1: changeFeatherParas(0, 1);
 		break;
 		case 2: changeFeatherParas(18, 0.8f);
