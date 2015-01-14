@@ -173,21 +173,37 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		return false;
 	}
 	
+	private static double round (double value, int precision) {
+	    int scale = (int) Math.pow(10, precision);
+	    return (double) Math.round(value * scale) / scale;
+	}
+	
 	private void moveOnSpecifix(float diff){
 		diffrence = diff;
 	int distanceBetweenFingers = (int) Math.round(diff);
 		
-		switch (distanceBetweenFingers) {
+	float val = (float)round(diff, 1);
+		switch (val) {
 		
 		case 1: changeFeatherParas(0, 1);
 		break;
+		case 2: changeFeatherParas(18, 0.9f);
+		break;
 		case 2: changeFeatherParas(18, 0.8f);
 		break;
-		case 3: changeFeatherParas(36, 0.6f);
+		case 2: changeFeatherParas(18, 0.7f);
 		break;
-		case 4: changeFeatherParas(54, 0.4f);
+		case 2: changeFeatherParas(18, 0.6f);
 		break;
-		case 5: changeFeatherParas(72, 0.2f);
+		case 2: changeFeatherParas(18, 0.5f);
+		break;
+		case 2: changeFeatherParas(18, 0.4f);
+		break;
+		case 3: changeFeatherParas(36, 0.3f);
+		break;
+		case 4: changeFeatherParas(54, 0.2f);
+		break;
+		case 5: changeFeatherParas(72, 0.1f);
 		break;
 		case 6: changeFeatherParas(100, 0);
 		break;
