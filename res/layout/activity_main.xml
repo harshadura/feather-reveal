@@ -14,19 +14,19 @@
 
     <ImageView
         android:id="@+id/leftImage"
-        android:layout_width="500dp"
-        android:layout_height="1000dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:contentDescription="image_desc"
         android:src="@drawable/left_leaf" />
 
     <ImageView
         android:id="@+id/rightImage"
-        android:layout_width="500dp"
-        android:layout_height="1000dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:contentDescription="image_desc"
         android:src="@drawable/right_leaf" />
 

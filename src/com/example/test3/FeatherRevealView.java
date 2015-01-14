@@ -85,8 +85,11 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		this.height = height;
 		
 		// leftImage.setX(width);
-		leftImage.setY(height - 1300);
-		rightImage.setY(height - 1300);
+		leftImage.setX(-100);
+		leftImage.setY(height - 1200);
+		
+		rightImage.setX(200);
+		rightImage.setY(height -1200);
 
 //		animateR();
 	}
@@ -173,37 +176,21 @@ public class FeatherRevealView extends RelativeLayout implements OnTouchListener
 		return false;
 	}
 	
-	private static double round (double value, int precision) {
-	    int scale = (int) Math.pow(10, precision);
-	    return (double) Math.round(value * scale) / scale;
-	}
-	
 	private void moveOnSpecifix(float diff){
 		diffrence = diff;
 	int distanceBetweenFingers = (int) Math.round(diff);
 		
-	float val = (float)round(diff, 1);
-		switch (val) {
+		switch (distanceBetweenFingers) {
 		
 		case 1: changeFeatherParas(0, 1);
 		break;
-		case 2: changeFeatherParas(18, 0.9f);
-		break;
 		case 2: changeFeatherParas(18, 0.8f);
 		break;
-		case 2: changeFeatherParas(18, 0.7f);
+		case 3: changeFeatherParas(36, 0.6f);
 		break;
-		case 2: changeFeatherParas(18, 0.6f);
+		case 4: changeFeatherParas(54, 0.4f);
 		break;
-		case 2: changeFeatherParas(18, 0.5f);
-		break;
-		case 2: changeFeatherParas(18, 0.4f);
-		break;
-		case 3: changeFeatherParas(36, 0.3f);
-		break;
-		case 4: changeFeatherParas(54, 0.2f);
-		break;
-		case 5: changeFeatherParas(72, 0.1f);
+		case 5: changeFeatherParas(72, 0.2f);
 		break;
 		case 6: changeFeatherParas(100, 0);
 		break;
